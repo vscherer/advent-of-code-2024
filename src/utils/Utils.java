@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.MatchResult;
+import java.util.regex.Pattern;
 
 public abstract class Utils {
 	public static void print(String s) {
@@ -33,5 +35,22 @@ public abstract class Utils {
 			}
 		}
 		return numbers;
+	}
+
+	public static List<String> extractAll(String s, String regex) {
+		return Pattern
+				.compile(regex)
+				.matcher(s)
+				.results()
+				.map(MatchResult::group)
+				.toList();
+	}
+
+	public static List<MatchResult> matchAll(String s, String regex) {
+		return Pattern
+				.compile(regex)
+				.matcher(s)
+				.results()
+				.toList();
 	}
 }
