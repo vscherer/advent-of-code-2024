@@ -1,9 +1,7 @@
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 import static utils.Utils.extractAllUnsignedInts;
-import static utils.Utils.readFile;
 
 public class Day01 extends BaseDay {
 
@@ -12,11 +10,13 @@ public class Day01 extends BaseDay {
 
 	public Day01() {
 		DAY = "01";
+		part1TestSolution = 11;
+		part2TestSolution = 31;
 	}
 
 	@Override
-	protected long part1(String inputFile) {
-		parseInput(inputFile);
+	protected long part1() {
+		parseInput();
 
 		int sum = 0;
 		while (!left.isEmpty()) {
@@ -27,8 +27,8 @@ public class Day01 extends BaseDay {
 	}
 
 	@Override
-	protected long part2(String inputFile) {
-		parseInput(inputFile);
+	protected long part2() {
+		parseInput();
 
 		long sum = 0;
 		while (!left.isEmpty()) {
@@ -43,9 +43,9 @@ public class Day01 extends BaseDay {
 		return sum;
 	}
 
-	private void parseInput(String inputFile) {
+	private void parseInput() {
 		resetQueues();
-		fillQueues(inputFile);
+		fillQueues();
 		assert left.size() == right.size();
 	}
 
@@ -54,8 +54,7 @@ public class Day01 extends BaseDay {
 		right = new PriorityQueue<>();
 	}
 
-	private void fillQueues(String inputFile) {
-		List<String> lines = readFile(inputFile);
+	private void fillQueues() {
 		lines.forEach((line) -> {
 			var numbers = extractAllUnsignedInts(line);
 			left.add(numbers.getFirst());

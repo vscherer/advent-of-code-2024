@@ -5,7 +5,13 @@ public class AoC24 {
 		today.run();
 	}
 
+	private static void runAll() {
+		(new Day01()).run();
+		(new Day02()).run();
+	}
+
 	public static void main(String[] args) {
 		runSingle();
+//		runAll();
 	}
 }

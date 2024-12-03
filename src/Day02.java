@@ -3,17 +3,16 @@ import utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.Utils.readFile;
-
 public class Day02 extends BaseDay {
 
 	public Day02() {
 		DAY = "02";
+		part1TestSolution = 2;
+		part2TestSolution = 4;
 	}
 
 	@Override
-	protected long part1(String inputFile) {
-		List<String> lines = readFile(inputFile);
+	protected long part1() {
 
 		return lines.stream()
 				.map(Utils::extractAllUnsignedInts)
@@ -22,9 +21,7 @@ public class Day02 extends BaseDay {
 	}
 
 	@Override
-	protected long part2(String inputFile) {
-		List<String> lines = readFile(inputFile);
-
+	protected long part2() {
 		return lines.stream()
 				.map(Utils::extractAllUnsignedInts)
 				.filter(this::isAlmostSafe)
