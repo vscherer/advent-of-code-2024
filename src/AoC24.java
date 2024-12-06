@@ -1,7 +1,7 @@
 public class AoC24 {
 
 	private static void runSingle() {
-		BaseDay today = new Day03();
+		BaseDay today = new Day05();
 		today.run();
 	}
 
