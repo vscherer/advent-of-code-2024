@@ -16,7 +16,9 @@ public abstract class BaseDay {
 
 		print("START PART 1 TEST");
 		lines = readFile("Day" + DAY + "_t1.txt");
-		assert (part1TestSolution == part1());
+		print("Solution: " + part1TestSolution);
+		print("Result: " + part1());
+		assert part1TestSolution == part1();
 		print("PART 1 TEST PASSED");
 
 		print("START PART 1 REAL");
@@ -30,7 +32,9 @@ public abstract class BaseDay {
 			// Reuse input from test 1
 			lines = readFile("Day" + DAY + "_t1.txt");
 		}
-		assert (part2TestSolution == part2());
+		print("Solution: " + part2TestSolution);
+		print("Result: " + part2());
+		assert part2TestSolution == part2();
 		print("PART 2 TEST PASSED");
 
 		print("START PART 2 REAL");
@@ -38,7 +42,9 @@ public abstract class BaseDay {
 		print("PART 2 RESULT: " + part2() + "\n");
 	}
 
-	protected abstract long part1();
+	protected long part1() {
+		throw new RuntimeException();
+	}
 
 	protected abstract long part2();
 }

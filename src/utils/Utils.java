@@ -53,4 +53,8 @@ public abstract class Utils {
 				.results()
 				.toList();
 	}
+
+	public static String reverse(String s) {
+		return new StringBuffer(s).reverse().toString();
+	}
 }
