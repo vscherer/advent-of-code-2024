@@ -1,16 +1,33 @@
+import java.util.List;
+
+import static utils.Utils.print;
+
 public class AoC24 {
 
 	private static void runSingle() {
-		BaseDay today = new Day05();
+		BaseDay today = new Day06();
 		today.run();
 	}
 
 	private static void runAll() {
-		(new Day01()).run();
-		(new Day02()).run();
-		(new Day03()).run();
-		(new Day04()).run();
-		(new Day05()).run();
+		List<BaseDay> days = List.of(
+				new Day01(),
+				new Day02(),
+				new Day03(),
+				new Day04(),
+				new Day05(),
+				new Day06()
+		);
+
+		days.forEach(day -> {
+			try {
+				day.run();
+			} catch (Exception e) {
+				print("Missing input files!");
+			}
+		});
+
+
 	}
 
 	public static void main(String[] args) {
