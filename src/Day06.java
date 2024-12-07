@@ -1,35 +1,98 @@
 import utils.CharGrid;
 import utils.Grid;
 import utils.GridLocation;
+import utils.Griterator;
 
+import java.util.ArrayList;
 import java.util.Collection;
-
-import static utils.Utils.print;
+import java.util.List;
 
 public class Day06 extends BaseDay {
 
 	private CharGrid grid;
+	private GridLocation start;
+	private Grid<Boolean> walkedOn;
+	private List<PathTile> path;
 
 	public Day06() {
 		DAY = "06";
 		part1TestSolution = 41;
-		part2TestSolution = -1;
+		part2TestSolution = 6;
 	}
 
 	@Override
 	protected long part1() {
+		parseInput();
+		markPath();
+		return countTrue(walkedOn);
+	}
+
+	@Override
+	protected long part2() {
+		parseInput();
+		markPath();
+
+		return path.stream()
+				.filter(this::causesLoopIfBlocked)
+				.map(tile -> tile.location.plus(tile.direction))
+				.distinct()
+				.count();
+	}
+
+	private void parseInput() {
 		grid = new CharGrid(lines);
 
-		GridLocation start = grid.findFirst('^').get();
-		print("Start " + start);
+		start = grid.findFirst('^').get();
 
-		Grid<Boolean> walkedOn = new Grid<>(grid.dimensions(), false);
+		walkedOn = new Grid<>(grid.dimensions(), false);
 		walkedOn.set(start, true);
 
-		walkUntilOut(start, walkedOn);
+		path = new ArrayList<>();
+	}
 
+	private void markPath() {
+		var it = grid.iterator(start);
+		Grid.Direction4 facing = Grid.Direction4.N;
+		walkAndMark(it, facing);
+	}
 
-		return countTrue(walkedOn);
+	private void walkAndMark(Griterator<Character> it, Grid.Direction4 facing) {
+		while (it.canStep(facing)) {
+			GridLocation nextLocation = it.location.plus(facing);
+			if (grid.get(nextLocation) == '#') {
+				facing = facing.turnClockwise();
+			} else {
+				path.add(new PathTile(it.location, facing));
+				it.step(facing);
+				walkedOn.set(it.location, true);
+			}
+		}
+	}
+
+	private boolean causesLoopIfBlocked(PathTile tile) {
+		var blockedTile = tile.location.plus(tile.direction);
+		if (blockedTile.equals(start)) return false;
+
+		var it = grid.iterator(start);
+		Grid.Direction4 facing = Grid.Direction4.N;
+
+		List<PathTile> newPath = new ArrayList<>();
+		while (it.canStep(facing)) {
+			GridLocation nextLocation = it.location.plus(facing);
+			if (grid.get(nextLocation) == '#' || nextLocation.equals(blockedTile)) {
+
+				var currentTile = new PathTile(it.location, facing);
+				if (newPath.contains(currentTile)) {
+					return true;
+				}
+
+				newPath.add(currentTile);
+				facing = facing.turnClockwise();
+			} else {
+				it.step(facing);
+			}
+		}
+		return false;
 	}
 
 	private long countTrue(Grid<Boolean> grid) {
@@ -39,32 +102,20 @@ public class Day06 extends BaseDay {
 				.count();
 	}
 
-	private void walkUntilOut(GridLocation start, Grid<Boolean> walkedOn) {
-		var it = grid.iterator();
-		it.moveTo(start);
-		Grid.Direction4 facing = Grid.Direction4.N;
-
-		while (it.canStep(facing)) {
-			if (grid.get(it.location.plus(facing)) == '#') {
-//				print("Object at " + it.location.plus(facing));
-				switch (facing) {
-					case N -> facing = Grid.Direction4.E;
-					case S -> facing = Grid.Direction4.W;
-					case E -> facing = Grid.Direction4.S;
-					case W -> facing = Grid.Direction4.N;
-				}
+	private record PathTile(GridLocation location, Grid.Direction4 direction) {
+		@Override
+		public boolean equals(Object obj) {
+			if (!(obj instanceof PathTile)) {
+				return false;
 			} else {
-//				print("Free to move to " + it.location.plus(facing));
+				return this.direction.equals(((PathTile) obj).direction)
+						&& this.location.equals(((PathTile) obj).location);
 			}
-
-			it.step(facing);
-			walkedOn.set(it.location, true);
-//			print("Moved to " + it.location);
 		}
-	}
 
-	@Override
-	protected long part2() {
-		return 0;
+		@Override
+		public String toString() {
+			return location.toString() + direction.name();
+		}
 	}
 }

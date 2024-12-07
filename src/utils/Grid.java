@@ -13,6 +13,15 @@ public class Grid<T> {
 		S,
 		E,
 		W;
+
+		public Direction4 turnClockwise() {
+			return switch (this) {
+				case N -> Grid.Direction4.E;
+				case S -> Grid.Direction4.W;
+				case E -> Grid.Direction4.S;
+				case W -> Grid.Direction4.N;
+			};
+		}
 	}
 
 
@@ -82,6 +91,10 @@ public class Grid<T> {
 
 	public Griterator<T> iterator() {
 		return new Griterator<T>(new Pair<>(rows(), columns()));
+	}
+
+	public Griterator<T> iterator(GridLocation start) {
+		return new Griterator<T>(start, new Pair<>(rows(), columns()));
 	}
 }
 

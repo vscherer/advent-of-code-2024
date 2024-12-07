@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.Objects;
+
 public class GridLocation extends Pair<Integer, Integer> {
 	public GridLocation(Integer first, Integer second) {
 		super(first, second);
@@ -25,5 +27,20 @@ public class GridLocation extends Pair<Integer, Integer> {
 	@Override
 	public String toString() {
 		return "(" + first + "," + second + ")";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof GridLocation)) {
+			return false;
+		} else {
+			return Objects.equals(this.first, ((GridLocation) obj).first)
+					&& Objects.equals(this.second, ((GridLocation) obj).second);
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return Integer.parseInt(this.first + "999" + this.second);
 	}
 }
