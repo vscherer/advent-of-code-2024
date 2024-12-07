@@ -5,7 +5,7 @@ import static utils.Utils.print;
 public class AoC24 {
 
 	private static void runSingle() {
-		BaseDay today = new Day06();
+		BaseDay today = new Day07();
 		today.run();
 	}
 
@@ -16,7 +16,8 @@ public class AoC24 {
 				new Day03(),
 				new Day04(),
 				new Day05(),
-				new Day06()
+				new Day06(),
+				new Day07()
 		);
 
 		days.forEach(day -> {

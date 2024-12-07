@@ -37,6 +37,18 @@ public abstract class Utils {
 		return numbers;
 	}
 
+	public static List<Long> extractAllUnsignedLongs(String s) {
+		List<Long> numbers = new ArrayList<>();
+		String[] parts = s.split("\\D+");
+
+		for (String part : parts) {
+			if (!part.isEmpty()) {
+				numbers.add(Long.parseLong(part));
+			}
+		}
+		return numbers;
+	}
+
 	public static List<String> extractAll(String s, String regex) {
 		return Pattern
 				.compile(regex)
