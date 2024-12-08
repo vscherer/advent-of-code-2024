@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 public class Grid<T> {
 
 
@@ -22,18 +23,6 @@ public class Grid<T> {
 				case W -> Grid.Direction4.N;
 			};
 		}
-	}
-
-
-	public enum Direction8 {
-		N,
-		S,
-		E,
-		W,
-		NE,
-		NW,
-		SE,
-		SW;
 	}
 
 	public List<List<T>> data;
@@ -78,6 +67,13 @@ public class Grid<T> {
 		data.get(location.second).set(location.first, newValue);
 	}
 
+	public boolean contains(GridLocation location) {
+		return location.row() >= 0
+				&& location.row() < rows()
+				&& location.column() >= 0
+				&& location.column() < columns();
+	}
+
 	public Optional<GridLocation> findFirst(T element) {
 		for (int y = 0; y < rows(); ++y) {
 			for (int x = 0; x < columns(); ++x) {
@@ -90,11 +86,11 @@ public class Grid<T> {
 	}
 
 	public Griterator<T> iterator() {
-		return new Griterator<T>(new Pair<>(rows(), columns()));
+		return new Griterator<>(new Pair<>(rows(), columns()));
 	}
 
 	public Griterator<T> iterator(GridLocation start) {
-		return new Griterator<T>(start, new Pair<>(rows(), columns()));
+		return new Griterator<>(start, new Pair<>(rows(), columns()));
 	}
 }
 

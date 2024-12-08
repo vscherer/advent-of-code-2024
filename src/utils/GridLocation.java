@@ -24,6 +24,14 @@ public class GridLocation extends Pair<Integer, Integer> {
 		};
 	}
 
+	public GridLocation plus(Vector2 v) {
+		return new GridLocation(this.column() + v.x(), this.row() + v.y());
+	}
+
+	public Vector2 vectorTo(GridLocation other) {
+		return new Vector2(other.column() - column(), other.row() - row());
+	}
+
 	@Override
 	public String toString() {
 		return "(" + first + "," + second + ")";

@@ -2,10 +2,11 @@ import java.util.List;
 
 import static utils.Utils.print;
 
+@SuppressWarnings("unused")
 public class AoC24 {
 
 	private static void runSingle() {
-		BaseDay today = new Day07();
+		BaseDay today = new Day08();
 		today.run();
 	}
 
@@ -17,7 +18,8 @@ public class AoC24 {
 				new Day04(),
 				new Day05(),
 				new Day06(),
-				new Day07()
+				new Day07(),
+				new Day08()
 		);
 
 		days.forEach(day -> {
